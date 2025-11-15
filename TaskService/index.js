@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use('/task',taskRouter)
 
-const PORT = proces.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   connectDb(process.env.MONGODB_URI)
   console.log(`TaskService is running on http://localhost:${PORT}`);

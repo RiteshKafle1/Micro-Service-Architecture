@@ -17,5 +17,13 @@ services:
     depends_on:
       - mongo
 
+  task-service:
+    build: ./TaskService   
+    container_name: task-service
+    ports:
+      - "4001:4001"
+    depends_on:
+      - mongo
+
 volumes:
   mongo_data:
