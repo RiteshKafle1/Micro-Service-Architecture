@@ -23,3 +23,19 @@ export const registerUser = async (req, res) => {
       .json({ success: false, message: "Internal Server Error" });
   }
 };
+
+export const getAllUser=async(_,res)=>{
+  try {
+    
+    const result=await User.find({});
+
+    if(!result||result.length===0)
+      return res.status(400).json({success:false,message:'Unable to fin the user'});
+
+    return res.status(200).json({success:true,result});
+
+  } catch (error) {
+    console.log('Error in fetching the users',error);
+    
+  }
+}
