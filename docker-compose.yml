@@ -8,22 +8,53 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - main-net
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - main-net
 
   user-service:
-    build: ./UserService   
+    build: ./UserService
     container_name: user-service
     ports:
       - "4000:4000"
     depends_on:
       - mongo
+      - rabbitmq
+    networks:
+      - main-net
 
   task-service:
-    build: ./TaskService   
+    build: ./TaskService
     container_name: task-service
     ports:
       - "4001:4001"
     depends_on:
       - mongo
+      - rabbitmq
+    networks:
+      - main-net
+
+  noti-service:
+    build: ./NotiService
+    container_name: noti-service
+    ports:
+      - "3003:3003"
+    depends_on:
+      - mongo
+      - rabbitmq
+    networks:
+      - main-net
 
 volumes:
   mongo_data:
+
+networks:
+  main-net:
